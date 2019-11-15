@@ -60,5 +60,7 @@ function GM( user ){
         user.indigPercent += curFood.indigestion();
         
         if(Math.random() < user.getIndigPercent()){ user.indigLevel += 1;}
+        
+        curFood = foods[Math.floor(Math.random() * foods.length)]
     }
 }

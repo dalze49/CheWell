@@ -14,7 +14,6 @@ function Food(name, maxHP, satiery, indigestion){
     };
 }
 
-var foods = [];
 
 function Player(initATK, maxSat, maxHP){
     this.ATK = initATK;
@@ -23,7 +22,7 @@ function Player(initATK, maxSat, maxHP){
     this.maxHP = maxHP;
     this.curHP = maxHP;
     
-    this.indigPercent = 1;
+    this.indigPercent = 1.0;
     this.indigLevel = 0;
 
     this.powerLevel = 0;
@@ -37,21 +36,29 @@ function Player(initATK, maxSat, maxHP){
         return 1 - (1/indigPercent);
     }
 
-    this.chew = function ( food ){
-        if(curFood.getCurHP() - atk <= 0){
+
+}
+
+function GM( user ){
+    this.user = user;
+    this.foods = [];
+    this.curFood;
+    
+    
+    this.chew = function (){
+        if(curFood.getCurHP() - user.ATK <= 0){
             curFood.setCurHP(0);
         }else{
-            curFood.setCurHP(curFood.getCurHP() - atk);
+            curFood.setCurHP(curFood.getCurHP() - user.ATK);
         }
     }
 
-    this.swallow = function( food ){
+    this.swallow = function(){
+        if(user.curSat + curFood.sat > user.maxSat) {user.curSat = user.maxSat;}
+        else{ user.curSat += curFood.sat;}
         
+        user.indigPercent += curFood.indigestion();
+        
+        if(Math.random() < user.getIndigPercent()){ user.indigLevel += 1;}
     }
-}
-
-function GM( user, foods){
-    this.user = user;
-    this.foods = foods;
-    var curFood;
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <HEAD>
+        <Title>CheWell</Title>
+        <meta charset="UTF-8">
+        <meta name="viewport", content="width=divice-width, initial-scale=1">
+        <style type="text/css">
+            body {
+                background-color: lightblue;
+            }
+            .curStage/*현재 스테이지 표시용*/
+            {
+               font-size: 70px;
+               position:fixed;
+               left:20px;
+            }
+            .energy/*현재 에너지(업그레이드 재화) 표시용*/
+            {
+                font-size:  50px;
+                position: fixed;
+                right:20px;
+            }
+            .curFood/*현재 음식 표시용*/
+            {
+                position: fixed;
+                left:600px;
+                top:200px;
+                font-size: 50px;
+                text-align:center;
+            }
+            .nexFood/*다음 음식 표시용*/
+            {
+                font-size: 30px;
+                position: fixed;
+                right: 50px;
+                top: 300px;
+                background-color:yellow;
+            }
+            .progress/*현재 스테이지 진행도, 남은 시간 표시용*/
+            {
+                font-size: 50px;
+                position: fixed;
+                right: 50px;
+                top: 550px;
+            }
+            .health/*체력바 표시용*/
+            {
+                display:inline-block;
+                border:solid 1px black;
+                width:70px;
+            }
+            .swallow
+            {
+                display:inline-block;
+                font-size:50px;
+                background-color:white;
+                position:fixed;
+                left:800px;
+                bottom:100px;
+            }
+            .ability
+            {  
+                border:solid 1px black;
+                background-color:tomato;
+                position:fixed;
+                font-size:30px;
+                top:20px;
+                left:400px;
+            }
+        </style>
+    </HEAD>
+    <BODY>
+        <div class="curStage">
+            Day 1 <br> 아침<!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+        </div>
+        <div class="energy">
+            에너지 <br> 500<!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+        </div>
+        <div class="curFood">
+            <table>
+                <tr>
+                    <td>
+                        <img src="curFood.png" width="550px"><!--임시로 이미지 넣어둠 수정될 부분-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        500/500<!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="nexFood">
+            <table>
+                <tr>
+                    <td rowspan="2">
+                        <img src="nexFood.png" width="130px">
+                    </td>
+                    <td>
+                        피자
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        511
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="progress">
+            <table>
+                <tr>
+                    <td>
+                       200<!--임시로 현재 시간 값 대충 넣어둠 수정 예정-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       6/15<!--임시로 현재 먹는 음식/해당 스테이지 전체 음식 수 넣어둠 수정 예정-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="swallow">
+            삼키기
+        </div>
+        <div>
+                <div class="health" style="height:500px;position:absolute;left:30px;top:300px;">
+                    <div style="width:70px;height:50%;background-color:red;position:absolute;top:50%"><!--건강수치 현재 임시로 값 넣어둠,height에 현재값%넣고 top에 (100-현재값)%를 넣음-->
+                    </div>
+                </div>
+                <div class="health" style="height:300px;position:absolute;left:110px;top:500px;">
+                    <div style="width:70px;height:20%;background-color:blue;position:absolute;top:80%"><!--포만감수치, 이하 동일-->
+                    </div>
+                </div>
+        </div>
+        <div class="ability">
+            <table>
+                <tr>
+                    <td>
+                        씹는 힘
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lv.1
+                    </td>    
+                </tr>
+                <tr>
+                    <td>
+                        50
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </BODY>
+</html>

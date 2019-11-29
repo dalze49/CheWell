@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>LoginFormTest</title>
+	<script>
+		window.addEventListener('load', function() {
+			var signup = document.querySelector('#signup');
+
+			signup.addEventListener('click', function() {
+				var id = document.querySelector('#id');
+
+				if (id.value == '' || id.value.length < 4) {
+					alert('닉네임은 반드시 4자 이상 써야 합니다.');
+					id.focus();
+				} else {
+					location.href = "http://corndog.io";
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<table align="center">
+		<tr>
+			<td><input type="text" id="id" placeholder="닉네임을 만들어주세요." style="width:400px; height:30px; font-size:25px;"></td>
+			<td><input type="button" id="signup" value="Start!" style="width:100px; height:35px; font-size:25px;"> </td>
+		</tr>
+	</table>
+</body>
+</html>

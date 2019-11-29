@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+	<TITLE>OptionPageTest</TITLE>
+	<style>
+		.top span {
+			position: relative;
+			opacity: 0;
+			top: 1;
+			animation: animateOverlay 1s ease-in-out forwards;
+		}
+		.top span:nth-child(4n) { animation-delay: 0s; }
+		.top span:nth-child(4n+1) { animation-delay: 0.75s; }
+		.top span:nth-child(4n+3) { animation-delay: 1.5s; }
+		.top span:nth-child(4n+2) { animation-delay: 2.25s; }
+
+		@keyframes animateOverlay {
+			to {
+				opacity: 1;
+				top: 0;
+			}
+		}
+	</style>
+</HEAD>
+<BODY>
+	<h2 class="top">
+		<span>Satisfied</span> <span>conveying an dependent</span> <span>contented he gentleman</span> <span>agreeable do be.</span> <br />
+		<span>Warrant private</span> <span>blushes removed</span> <span>an in equally totally if.</span>
+	</h2>
+</BODY>
+</HTML>

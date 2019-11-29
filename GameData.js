@@ -1,82 +1,91 @@
-function Food(name, maxHP, satiery, indigestion){
-    this.name = name; //이름, 문자열
-    this.maxHP = maxHP; //최대 체력, 정수
-    this.curHP = maxHP; //현재 체력, 정수 
-    this.sat = satiery; //포만 수치, 실수
+<script src="http://code.jquery.com/jquery-latest.min.js">
+var healthBar = JQuery('#health')[0];
+var satBar = JQuery('#sat')[0];
+var energy = JQuery('#energy')[0];
+
+var skill01 = JQuery('#skill01')[0];
+var skillLevel01 = JQuery('#skillLevel01')[0];
+var skillCost01 = JQuery('#skillCost01')[0];
+
+var eat = JQuery('#eat')[0];
+
+var day = JQuery('#day')[0];
+var time = JQuery('#time')[0];
+var stage = JQuery('#stage')[0];
+var timer = JQuery('#timer')[0];
+
+var foodHP = JQuery('#hp')[0];
+var food =JQuery('#food')[0];
+
+var nextFood = JQuery('#nextFood')[0];
+
+
+window.onload = function() {};
+
+function Food(name, maxHP, satiery, indigestion, imgSrc){
+    this.name = name;
+    this.maxHP = maxHP;
+    this.curHP = maxHP;
+    this.sat = satiery;
+    this.img = imgSrc;
     
     this.getName = function() { return this.name; }
     this.getCurHP = function() { return this.curHP; }
     this.getSat = function() { return this.sat}
     this.setCurHP = function(HP) {this.curHP = HP;}
     
-    this.indigestion = function() { //소화 불량 확률
+    this.indigestion = function() {
         return this.curHP/this.maxHP;
     };
 }
 
+var foods = [];
 
 function Player(initATK, maxSat, maxHP){
-    this.initATK = initATK; //공격력, 정수
-    this.maxSat = maxSat; //최대 포만감, 정수
-    this.curSat = maxSat; //현재 포만감, 정수
-    this.maxHP = maxHP; // 최대 체력, 정수
-    this.curHP = maxHP; //현재 체력, 정수
+    this.ATK = initATK;
+    this.maxSat = maxSat;
+    this.curSat = maxSat;
+    this.maxHP = maxHP;
+    this.curHP = maxHP;
     
-    //공격력 = initATK + powerLevel * step
-    this.powerLevel = 0;
-    this.powerUpCost = 100;
+    this.indigPercent = 1;
+    this.indigLevel = 0;
     
-    //최대 포만감 = initSat + satLevel * step
-    this.satLevel = 0;
-    this.satUpCost = 100;
+    <!--chew power-->
+    this.skillLevel01 = 1;
+    this.skillCost01 = 50;
     
-    this.getATK = function(){
-        return initATK + this.powerLevel * 10;
-    }
+    <!-- sat  -->
+    this.skillLevel02 = 0;
+    this.skillCost02 = 100;
     
-    this.getMaxSat = function(){
-        return maxSat + this.satLevel * 10;
-    }
+    this.upgradePoint = 0;
     
-    this.indigPercent = 1.0; //소화 불량 확률 스택, 실수
-    this.indigLevel = 1; //소화 불량 스택
-    
-    this.upgradePoint = 0; // 성장 수치
-
-    //소화불량 확률
+    <!-- 소화불량 확률 계산 -->
     this.getIndigPercent = function(){
         return 1 - (1/indigPercent);
     }
-}
-
-function GM( user ){
-    this.user = user;
-    this.foods = [];
-    this.curFood;
-    
-    //씹기 함수
-    this.chew = function (){
-        if(curFood.getCurHP() - user.getATK() <= 0){
+    <!-- 씹기 함수 -->
+    this.chew = function ( food ){
+        if(curFood.getCurHP() - atk <= 0){
             curFood.setCurHP(0);
         }else{
-            curFood.setCurHP(curFood.getCurHP() - user.getATK());
+            curFood.setCurHP(curFood.getCurHP() - atk);
         }
     }
-    
-    //삼키기 함수
-    this.swallow = function(){
-        var tmpSat = Math.floor(carFood.sat / user.indigLevel);
-        //포만감 채우기
-        if(user.curSat + tmpSat > user.getMaxSat) {user.curSat = user.getMaxSat;}
-        else { user.curSat += tmpSat;}
+    <!-- 삼키기 함수 -->
+    this.swallow = function( food ){
         
-        //소화 불량 확률 스택 업데이트
-        user.indigPercent += curFood.indigestion();
-        
-        //소화 불량 스택 확률 계산
-        if(Math.random() < user.getIndigPercent()){ user.indigLevel += 1;}
-        
-        //랜덤하게 음식 선택
-        curFood = foods[Math.floor(Math.random() * foods.length)]
     }
+    <!-- 씹는 힘 강화 -->
+    this.Skill01Up = function( newATK ){ this.ATK = newATK; }
 }
+
+function GM( user, foods){
+    this.user = user;
+    this.foods = foods;
+    var curFood;
+}
+
+</script>
+

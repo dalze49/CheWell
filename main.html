@@ -73,10 +73,10 @@
     </HEAD>
     <BODY>
         <div class="curStage">
-            Day 1 <br> 아침<!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+            <span id="day">Day 1</span> <br> <span id="dayTime">아침</span><!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
         </div>
         <div class="energy">
-            에너지 <br> 500<!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+            에너지 <br> <span id="energy">500</span><!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
         </div>
         <div class="curFood">
             <table>
@@ -96,15 +96,15 @@
             <table>
                 <tr>
                     <td rowspan="2">
-                        <img src="./img/nexFood.png" width="130px">
+                        <img id="nextFoodSrc" src="./img/nexFood.png" width="130px">
                     </td>
                     <td>
-                        피자
+                        <span id="nextFoodName">피자</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        511
+                       <span id="nextFoodHP"> 511</span>
                     </td>
                 </tr>
             </table>
@@ -118,7 +118,7 @@
                 </tr>
                 <tr>
                     <td>
-                       6/15<!--임시로 현재 먹는 음식/해당 스테이지 전체 음식 수 넣어둠 수정 예정-->
+                       <span id="stage">6/15</span><!--임시로 현재 먹는 음식/해당 스테이지 전체 음식 수 넣어둠 수정 예정-->
                     </td>
                 </tr>
             </table>
@@ -136,21 +136,21 @@
                     </div>
                 </div>
         </div>
-        <div class="ability">
+        <div id="skill01" class="ability">
             <table>
                 <tr>
                     <td>
-                        씹는 힘
+                        <span>씹는 힘</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Lv.1
+                        <span id="skillLevel01">Lv.1</span>
                     </td>    
                 </tr>
                 <tr>
                     <td>
-                        50
+                        <span id="skillCost01">50E</span>
                     </td>
                 </tr>
             </table>

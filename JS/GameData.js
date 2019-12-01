@@ -1,30 +1,56 @@
+<!--포만감 감소 수치/ -n sat/sec -->
+var satDownSpeed = 3;
+
 var healthBar=null;
 var satBar=null;
+
+<!--energy UI-->
 var energy=null;
 
+<!--업그레이드 UI-->
 var skill01=null;
 var skillLevel01=null;
 var skillCost01=null;
 
+<!--삼키기 UI-->
 var eat=null;
 
+<!--일 UI-->
 var day=null;
-var time=null;
-var stage=null;
-var timer=null;
+var dayNum=1;
 
+<!--아침 점심 저녁 UI-->
+var dayTime=null;
+var dayTimeNum=0;
+var dayTimeStr=["아침","점심","저녁"];
+
+<!--스테이지 UI-->
+var stage=null;
+var stageMax=15;
+var stageCur=1;
+
+<!--음식 UI-->
 var foodHP=null;
 var food=null;
 
-var nextFood=null;
+var nextFoodSrc=null;
+var nextFoodName=null;
+var nextFoodHP=null;
 
+<!--업데이트 타이머 객체-->
 var updateTimer = null;
-var stageTimer = null;
-var leftTime = 200;
 
+<!--게임 스테이지 타이머 UI-->
+var timer=null;
+var stageTimer=null;
+var stageTimerNum=200;
+
+<!--유저, 음식 객체-->
 var user=null;
 var curFood=null;
+var nextFood=null;
 
+<!--음식 이미지 배열-->
 var foodImg = ["./img/curFood.png"];
 
 var Food = function(name, maxHP, satiery, imgSrc){
@@ -43,6 +69,10 @@ var Food = function(name, maxHP, satiery, imgSrc){
     this.indigestion = function() {
         return this.curHP/this.maxHP;
     };
+    
+    this.getEnergy = function(){
+        return this.maxHP-this.curHP;
+    }
 }
 
 var Player = function(initATK, maxSat, maxHP){
@@ -51,6 +81,7 @@ var Player = function(initATK, maxSat, maxHP){
     this.curSat = maxSat;
     this.maxHP = maxHP;
     this.curHP = maxHP;
+    this.energy=0;
     
     this.indigPercent = 1;
     this.indigLevel = 0;
@@ -89,9 +120,21 @@ var Player = function(initATK, maxSat, maxHP){
         }else{
             this.curSat += food.sat;
         }
+        
+        stageCur++;
+        if(stageCur >= stageMax){
+            stageNext();
+        }
+        this.energy+=food.getEnergy();
     };
-    <!-- 씹는 힘 강화 -->
-    this.Skill01Up = function( newATK ){ this.ATK = newATK; };
+    <!-- 씹는 힘 강화/ newATK 만큼 ATK값이 추가됨 -->
+    this.skill01Up = function( newATK ){
+        if(this.energy-this.skillCost01>=0){
+            this.ATK += newATK;
+            this.energy-=this.skillCost01;
+            this.skillLevel01++;
+        }
+    };
 }
 
 var GM = function( user, foods){
@@ -101,18 +144,48 @@ var GM = function( user, foods){
 }
 
 function update(){
+    <!--UI 업데이트-->
     healthBar.css({"height":(user.getPercentHP()+"%"),"top":((100-user.getPercentHP())+"%")});
     satBar.css({"height":(user.getPercentSat()+"%"),"top":((100-user.getPercentSat())+"%")});
-    user.curSat -=0.01;
+    if(user.curSat - 0.01 * satDownSpeed >= 0){
+        user.curSat -=0.01 * satDownSpeed;
+    }else{
+        user.curHP -=20;
+        user.curSat = user.maxSat;
+    }
     foodHP.text(curFood.getCurHP()+"/"+curFood.getMaxHP());
+    day.text("day "+dayNum);
+    dayTime.text(dayTimeStr[dayTimeNum])
+    stage.text(stageCur+"/"+stageMax);
+    energy.text(user.energy+"E");
+    skillLevel01.text("Lv."+user.skillLevel01);
+    skillCost01.text(user.skillCost01+"E");
+    
+    nextFoodSrc.attr("src",nextFood.img);
+    nextFoodName.text(nextFood.getName());
+    nextFoodHP.text(nextFood.getMaxHP());
+    
 }
 
+<!--다음 스테이지 호출-->
+function stageNext(){
+    stageCur = 1;
+    stageTimerNum=200;
+    dayTimeNum++;
+    if(dayTimeNum >= dayTimeStr.length){
+        dayTimeNum=0;
+        dayNum++;
+    }
+}
+
+<!--새 음식 추가-->
 function newFood(){
-    newf = new Food("Pizza",100,20,foodImg[0]);
+    newf = new Food("피자",100,20,foodImg[0]);
     food.attr("src",newf.img);
     return newf;
 }
 
+<!--초기화 담당-->
 $(document).ready(function(){
     healthBar = $('#health');
     satBar = $('#sat');
@@ -125,20 +198,29 @@ $(document).ready(function(){
     eat = $('#eat');
 
     day = $('#day');
-    time = $('#time');
+    dayTime = $('#dayTime');
     stage = $('#stage');
     timer = $('#timer');
 
     foodHP = $('#hp');
     food =$('#food');
 
-    nextFood = $('#nextFood');
+    nextFoodSrc=$('#nextFoodSrc');
+    nextFoodName=$('#nextFoodName');
+    nextFoodHP=$('#nextFoodHP');
     
     user = new Player(10,100,100);
     curFood = newFood();
+    nextFood = newFood();
     
+<!--씹기 버튼-->
     food.click(function(){
         user.chew(curFood);
+    });
+
+<!--업그레이드 버튼-->
+    skill01.click(function(){
+        user.skill01Up(10);
     });
     
     eat.click(function(){
@@ -148,8 +230,9 @@ $(document).ready(function(){
     
     updateTimer = setInterval(update,10);
     stageTimer = setInterval(function() {
-        timer.text(leftTime+"sec");
-        leftTime-=1;
+        timer.text(stageTimerNum+"sec");
+        stageTimerNum-=1;
+        if(stageTimerNum < 0){ stageNext(); };
     }, 1000);
 });
 

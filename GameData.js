@@ -19,7 +19,7 @@ var eat=null;
 var day=null;
 var dayNum=1;
 
-<!--아침 점심 저녁 UI-->
+<!--아침 점심 저녁 UI, dayTimeColor는 각각 낮, 저녁, 아침 순서-->
 var dayTime=null;
 var dayTimeNum=0;
 var dayTimeStr=["아침","점심","저녁"];

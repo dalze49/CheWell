@@ -68,7 +68,9 @@
 		}
 
 		.idform {
-			margin: 0% 0% 0% 0% ;
+			position: absolute;
+			right: 3%;
+			top: 1%;
 		}
 
 		.menu {
@@ -153,14 +155,21 @@
 					</fieldset>
 				</form>
 			</div>
-			<div class="idform">
-				<table align="center">
-					<tr>
-						<td><input type="text" id="id" placeholder="Please input your name." style="width:400px; height:30px; font-size:25px;"></td>
-						<td><input type="button" id="signup" value="Start" style="width:100px; height:30px; font-size:27px;"> </td>
-					</tr>
-				</table>
-			</div>
+			<form method="post" id="authForm" action="">
+				<div class="idform">
+					<table align="center">
+						<tr>
+							<td><label for="id"><input type="text" id="id" placeholder="ID" style="width:200px; height:25px; font-size:20px;"></label></td>
+						</tr>
+						<tr>
+							<td><label for="passwd"><input type="password" id="passwd" placeholder="password" style="width:200px; height:25px; font-size:20px;"></label></td>
+						</tr>
+						<tr>
+							<td align="right"><input type="submit" value="Login" style="width:100px; height:30px; font-size:22px;"> </td>
+						</tr>
+					</table>
+				</div>
+			</form>
 			<div class="menu"><a href="#1" , style="font-size: 50px"></a></div>
 			<div class="ver">0.03ver Test</div>
 		</div>

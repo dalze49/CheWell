@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+    <HEAD>
+        <Title>CheWell</Title>
+        <meta charset="UTF-8">
+        <meta name="viewport", content="width=divice-width, initial-scale=1">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="./JS/GameData.js"></script>
+        <script src="./JS/Homepage.js"></script>
+        <style type="text/css">
+
+            .curStage/*현재 스테이지 표시용*/
+            {
+               font-size: 50px;
+               position: absolute;
+               left:3%;
+            }
+            .energy/*현재 에너지(업그레이드 재화) 표시용*/
+            {
+                font-size: 50px;
+                position: absolute;
+                right: 3%;
+            }
+            .curFood/*현재 음식 표시용*/
+            {
+                position: absolute;
+                left: 23%;
+                bottom: 10%;
+                font-size: 50px;
+                text-align:center;
+				transition:all ease 0.01s;
+            }
+			.curFood:active
+			{
+				transform: scale(0.92);
+			}
+            .nexFood/*다음 음식 표시용*/
+            {
+                font-size: 30px;
+                position: absolute;
+                right: 3%;
+                top: 40%;
+                background-color:yellow;
+            }
+            .progress/*현재 스테이지 진행도, 남은 시간 표시용*/
+            {
+                font-size: 50px;
+                position: absolute;
+                right: 3%;
+                bottom: 10%
+            }
+            .health/*체력바 표시용*/
+            {
+                display:inline-block;
+                border:solid 1px black;
+                width:70px;
+            }
+            .ability
+            {  
+                border:solid 1px black;
+                background-color:tomato;
+                position:absolute;
+                font-size:30px;
+                top: 2%;
+                left: 25%;
+            }
+			body
+			{
+				background-color: lightblue;
+			}
+			#eat
+			{
+				position: absolute;
+				right: 18%;
+				bottom: 45%;
+				font-size: 50px;
+			}
+        </style>
+    </HEAD>
+	<BODY>
+		<div class="curStage">
+			<span id="day">day 1</span> <br> <span id="dayTime">아침</span><!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+		</div>
+		<div class="energy">
+			에너지 <br> <span id="energy">500</span><!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+		</div>
+		<div class="curFood" style="overflow:hidden">
+			<table>
+				<tr>
+					<td id="food">
+						<img id="food" src="./img/curFood.png" style="width:60%; height:auto"><!--임시로 이미지 넣어둠 수정될 부분-->
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="hp">100/100</span><!--임시로 그냥 값 적어둠 나중에 기능 만들면 수정될 부분-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="eat">
+			<input type="button" value="삼키기" style="width:170px; height:50px; font-size:40px; text-align:center">
+		</div>
+		<div class="nexFood">
+			<table>
+				<tr>
+					<td rowspan="2">
+						<img id="nextFoodSrc" src="./img/nexFood.png" style="width:120px; height:auto;">
+					</td>
+					<td>
+						<span id="nextFoodName">피자</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="nextFoodHP">100</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="progress">
+			<table>
+				<tr>
+					<td>
+						<span id="timer">200sec</span><!--임시로 현재 시간 값 대충 넣어둠 수정 예정-->
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="stage"></span><!--임시로 현재 먹는 음식/해당 스테이지 전체 음식 수 넣어둠 수정 예정-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<div class="health" style="height:60%; position:absolute; left:30px; top:35%;">
+				<div id="health" style="width:70px;height:50%;background-color:red;position:absolute;top:50%">
+					<!--건강수치 현재 임시로 값 넣어둠,height에 현재값%넣고 top에 (100-현재값)%를 넣음-->
+				</div>
+			</div>
+			<div class="health" style="height:40%; position:absolute; left:110px; top:55%;">
+				<div id="sat" style="width:70px;height:20%;background-color:blue;position:absolute;top:80%">
+					<!--포만감수치, 이하 동일-->
+				</div>
+			</div>
+		</div>
+		<div id="skill01" class="ability">
+			<table>
+				<tr>
+					<td>
+						<span>씹는 힘</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="skillLevel01">Lv.1</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span id="skillCost01">50E</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</BODY>
+</html>

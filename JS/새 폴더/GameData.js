@@ -1,5 +1,5 @@
 <!--포만감 감소 수치/ -n sat/sec -->
-var satDownSpeed = 5;
+var satDownSpeed = 3;
 
 var healthBar=null;
 var satBar=null;
@@ -51,8 +51,6 @@ var user=null;
 var curFood=null;
 var nextFood=null;
 
-var score = 0;
-
 <!--음식 이미지 배열-->
 var foodImg = new Array();
 foodImg[0] = "./img/food/hamburger.png";
@@ -103,7 +101,6 @@ var Player = function(initATK, maxSat, maxHP){
     
     this.indigPercent = 1;
     this.indigLevel = 0;
-    this.indigStack = 0;
     
     <!--chew power-->
     this.skillLevel01 = 1;
@@ -120,10 +117,10 @@ var Player = function(initATK, maxSat, maxHP){
     this.getPercentSat = function(){return 100*this.curSat/this.maxSat;};
     <!-- 소화불량 확률 계산 -->
     this.getIndigPercent = function(){
-        return 1 - (1/this.indigPercent);
+        return 1 - (1/indigPercent);
     };
     <!-- 씹기 함수 -->
-    this.chew = function( curFood ){
+    this.chew = function ( curFood ){
         if(curFood.getCurHP() - this.ATK <= 0){
             curFood.setCurHP(0);
         }else{
@@ -134,20 +131,6 @@ var Player = function(initATK, maxSat, maxHP){
     this.swallow = function( food ){
         this.indigPercent += food.indigestion();
         <!-- 대충 소화불량함수가 들어갈 자리 -->
-
-        if(this.indigStack>=1)
-        {
-            food.sat/=2;
-            this.indigStack--;
-        }
-
-        var indigRan = Math.round(Math.random()*10);
-        if((this.getIndigPercent()*10)/1>=indigRan)
-        {
-            this.indigStack+=5;
-            this.indigPercent=1;
-        }
-       
         if(this.curSat + food.sat > this.maxSat){
             this.curSat = this.maxSat;
         }else{
@@ -159,7 +142,6 @@ var Player = function(initATK, maxSat, maxHP){
             stageNext();
         }
         this.energy+=food.getEnergy();
-		score += food.getMaxHP();
     };
     <!-- 씹는 힘 강화/ newATK 만큼 ATK값이 추가됨 -->
     this.skill01Up = function( newATK ){
@@ -167,7 +149,6 @@ var Player = function(initATK, maxSat, maxHP){
             this.ATK += newATK;
             this.energy-=this.skillCost01;
             this.skillLevel01++;
-            this.skillCost01 += 30;
         }
     };
 }
@@ -187,15 +168,7 @@ function update(){
     }else{
         user.curHP -=20;
         user.curSat = user.maxSat;
-        if(user.curHP <= 0)
-        {
-			score += user.energy;
-			addScore(curUser, score);
-			alert("game over! \nyour score: "+score);
-			location.href="./CheWell Home Page.html";
-        }
     }
-    
     foodHP.text(curFood.getCurHP()+"/"+curFood.getMaxHP());
     day.text("day "+dayNum);
     dayTime.text(dayTimeStr[dayTimeNum])
@@ -224,8 +197,8 @@ function stageNext(){
 <!--새 음식 추가-->
 function newFood(){
     var foodNum = Math.round(Math.random()*5);
-    newf = new Food(foodName[foodNum],(dayNum*100+dayTimeNum*20+stageCur*10),20,foodImg[foodNum]);
-    nextFoodSrc.attr("src",newf.img);
+    newf = new Food(foodName[foodNum],100,20,foodImg[foodNum]);
+    food.attr("src",newf.img);
     return newf;
 }
 
@@ -255,7 +228,6 @@ $(document).ready(function(){
     
     user = new Player(10,100,100);
     curFood = newFood();
-    food.attr("src",curFood.img);
     nextFood = newFood();
 	
     
@@ -266,14 +238,12 @@ $(document).ready(function(){
 
 <!--업그레이드 버튼-->
     skill01.click(function(){
-        user.skill01Up(5);
+        user.skill01Up(1);
     });
     
     eat.click(function(){
         user.swallow(curFood);
-        curFood = nextFood;
-        nextFood = newFood();
-        food.attr("src",curFood.img);
+        curFood = newFood();
     });
     
     updateTimer = setInterval(update,10);

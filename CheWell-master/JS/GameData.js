@@ -184,7 +184,13 @@ function update(){
     }else{
         user.curHP -=20;
         user.curSat = user.maxSat;
+        if(user.curHP <= 0)
+        {
+            alert("game over!");
+         location.href="./CheWell Home Page.html";
+        }
     }
+    
     foodHP.text(curFood.getCurHP()+"/"+curFood.getMaxHP());
     day.text("day "+dayNum);
     dayTime.text(dayTimeStr[dayTimeNum])
